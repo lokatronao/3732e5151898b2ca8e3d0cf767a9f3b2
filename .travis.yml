@@ -6,10 +6,9 @@ node_js:
 jdk:
   - oraclejdk8
 
-addons:
-  sonarcloud: true
-
 master:
+  addons:
+  sonarcloud: true
   - nvm install 8
   - npm run setup
   - npm run build
