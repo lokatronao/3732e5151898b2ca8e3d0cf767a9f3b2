@@ -10,6 +10,7 @@ addons:
   sonarcloud: true
 
 script:
+  - apt-get install nodejs
   - npm run setup
   - node -v
   - npm run build
