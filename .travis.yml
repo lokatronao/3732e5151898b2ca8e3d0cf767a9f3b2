@@ -6,9 +6,10 @@ node_js:
 jdk:
   - oraclejdk8
 
-master:
-  addons:
+addons:
   sonarcloud: true
+
+script:
   - nvm install 8
   - npm run setup
   - npm run build
@@ -18,3 +19,4 @@ master:
   - npm run cover
   - ls -l
   - sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=lokatronao-github -Dsonar.projectKey=3732e5151898b2ca8e3d0cf767a9f3b2 -Dsonar.sources='./dist' -X
+  - npm run coveralls
