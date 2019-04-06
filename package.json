@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "mocha dist/test/",
-        "cover": "istanbul cover _mocha",
+        "cover": "istanbul cover _mocha dist/",
         "setup": "npm install",
         "build": "tsc"
     },
