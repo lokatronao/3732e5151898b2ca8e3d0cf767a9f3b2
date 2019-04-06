@@ -1,7 +1,7 @@
 language: nodejs
 
-node_js:
-  - "stable"
+node_js: 
+ - 10.15.3
 
 jdk:
   - oraclejdk8
@@ -9,7 +9,6 @@ jdk:
 addons:
   sonarcloud: true
 
-  
 script:
   - npm run setup
   - npm run build
