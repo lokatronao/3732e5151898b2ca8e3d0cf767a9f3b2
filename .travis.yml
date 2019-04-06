@@ -9,7 +9,8 @@ jdk:
 addons:
   sonarcloud: true
 
+  
 script:
   - npm run setup
   - npm run build
-  - sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=lokatronao-github -Dsonar.projectKey=582767EA780E8AA18E9D94093FAEE6F9 -Dsonar.sources='./dist' -X
+  - sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=lokatronao-github -Dsonar.projectKey=3732e5151898b2ca8e3d0cf767a9f3b2 -Dsonar.sources='./dist' -X
