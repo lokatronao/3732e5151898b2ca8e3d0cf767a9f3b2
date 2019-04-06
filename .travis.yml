@@ -17,4 +17,5 @@ script:
   - nohup node dist/index.js &
   - npm run test
   - npm run cover
+  - ls -l
   - sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=lokatronao-github -Dsonar.projectKey=3732e5151898b2ca8e3d0cf767a9f3b2 -Dsonar.sources='./dist' -X
