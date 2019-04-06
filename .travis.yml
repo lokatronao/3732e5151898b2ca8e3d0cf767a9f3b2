@@ -11,6 +11,7 @@ addons:
 
 script:
   - npm run setup
+  - node -v
   - npm run build
   - npm run test
   - npm run cover
