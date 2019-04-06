@@ -6,6 +6,10 @@ node_js:
 jdk:
   - oraclejdk8
 
+addons:
+  sonarcloud: true
+
 script:
   - npm run setup
-  - npm run build  
+  - npm run build
+  - sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=lokatronao-github -Dsonar.projectKey=582767EA780E8AA18E9D94093FAEE6F9 -Dsonar.sources='./dist' -X
