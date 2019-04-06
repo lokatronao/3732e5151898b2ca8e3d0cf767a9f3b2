@@ -1,0 +1,20 @@
+{
+    "name": "api-picturegram",
+    "version": "1.0.0",
+    "description": "api-picturegram",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lokatronao/3732e5151898b2ca8e3d0cf767a9f3b2.git"
+    },
+    "author": "lokatronao",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/lokatronao/3732e5151898b2ca8e3d0cf767a9f3b2/issues"
+    },
+    "homepage": "https://github.com/lokatronao/3732e5151898b2ca8e3d0cf767a9f3b2#readme"
+}
