@@ -1,7 +1,7 @@
 language: nodejs
 
 node_js: 
- - '10.15.3'
+ - "6"
 
 jdk:
   - oraclejdk8
