@@ -1,0 +1,36 @@
+{
+    "name": "api-picturegram",
+    "version": "1.0.0",
+    "description": "api-picturegram",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "setup": "npm install",
+        "build": "tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lokatronao/3732e5151898b2ca8e3d0cf767a9f3b2.git"
+    },
+    "author": "lokatronao",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/lokatronao/3732e5151898b2ca8e3d0cf767a9f3b2/issues"
+    },
+    "homepage": "https://github.com/lokatronao/3732e5151898b2ca8e3d0cf767a9f3b2#readme",
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "istanbul": "^0.4.5",
+        "mocha": "^6.0.2",
+        "typescript": "^3.4.2"
+    },
+    "dependencies": {
+        "bcrypt": "^3.0.5",
+        "body-parser": "^1.18.3",
+        "cors": "^2.8.5",
+        "express": "^4.16.4",
+        "express-fileupload": "^1.1.4",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.4.22"
+    }
+}
