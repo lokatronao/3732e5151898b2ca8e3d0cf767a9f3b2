@@ -9,7 +9,7 @@ jdk:
 addons:
   sonarcloud: true
 
-script:
+master:
   - nvm install 8
   - npm run setup
   - npm run build
