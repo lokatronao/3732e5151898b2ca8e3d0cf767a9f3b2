@@ -3,6 +3,12 @@ language: nodejs
 node_js:
   - "stable"
 
-before_script:
-  - npm run setup
-  - npm run build
+jdk:
+  - oraclejdk8
+
+jobs:
+  include:
+    - stage: compilacion e inicio
+    - script:
+      - npm run setup
+      - npm run build  
