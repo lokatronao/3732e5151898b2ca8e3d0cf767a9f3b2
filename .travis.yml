@@ -6,9 +6,6 @@ node_js:
 jdk:
   - oraclejdk8
 
-jobs:
-  include:
-    - stage: compilacion e inicio
-    - script:
-      - npm run setup
-      - npm run build  
+script:
+  - npm run setup
+  - npm run build  
