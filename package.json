@@ -4,7 +4,8 @@
     "description": "api-picturegram",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "mocha dist/test/",
+        "cover": "istanbul cover _mocha",
         "setup": "npm install",
         "build": "tsc"
     },
