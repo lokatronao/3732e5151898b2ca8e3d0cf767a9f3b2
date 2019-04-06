@@ -11,7 +11,7 @@ addons:
 
 script:
   - sudo apt-get update
-  - sudo apt-get install nodejs
+  - sudo apt-get upgrade
   - npm run setup
   - node -v
   - npm run build
