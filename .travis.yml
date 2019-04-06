@@ -10,8 +10,7 @@ addons:
   sonarcloud: true
 
 script:
-  - sudo apt-get update
-  - sudo apt-get upgrade
+  - nvm install 8
   - npm run setup
   - node -v
   - npm run build
