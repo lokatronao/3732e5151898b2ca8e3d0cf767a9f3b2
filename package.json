@@ -19,6 +19,9 @@
     },
     "homepage": "https://github.com/lokatronao/3732e5151898b2ca8e3d0cf767a9f3b2#readme",
     "devDependencies": {
+        "chai": "^4.2.0",
+        "istanbul": "^0.4.5",
+        "mocha": "^6.0.2",
         "typescript": "^3.4.2"
     },
     "dependencies": {
