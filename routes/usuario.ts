@@ -28,4 +28,11 @@ userRoutes.post('/create', (req:Request,res:Response) =>{
     
 });
 
+userRoutes.get('/prueba', (req:Request,res:Response) =>{
+    res.json({
+        ok:true,
+        mensaje: 'Todo funciona bien!'
+    })
+});
+
 export default userRoutes;
