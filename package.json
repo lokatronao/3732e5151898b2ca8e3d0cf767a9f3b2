@@ -42,7 +42,7 @@
             "**/*.ts"
         ],
         "exclude": [
-            "**/*.test.ts"
+            "**/*Test.ts"
         ],
         "extension": [
             ".ts"
