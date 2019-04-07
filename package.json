@@ -9,7 +9,7 @@
         "ny": "nyc --reporter=lcov --reporter=text-lcov npm test",
         "setup": "npm install",
         "build": "tsc",
-        "coveralls": "npm run cover -- report lcovonly && cat. / coverage / lcov.info | coveralls",
+        "coveralls": "npm run ny -- report lcovonly && cat. / coverage / lcov.info | coveralls",
         "hola": "istanbul cover ./node_modules/mocha/bin/_mocha -- --recursive dist/test/ --report lcovonly -- -R spec"
     },
     "repository": {
