@@ -5,10 +5,12 @@
     "main": "index.js",
     "scripts": {
         "test": "mocha --recursive dist/test/",
-        "cover": "istanbul cover _mocha -- --recursive dist/test/",
+        "cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- --bail --recursive 'dist/test/'",
+        "ny": "nyc --reporter=lcov --reporter=text-lcov npm test",
         "setup": "npm install",
         "build": "tsc",
-        "coveralls": "npm run cover -- report lcovonly && cat. / coverage / lcov.info | coveralls"
+        "coveralls": "npm run cover -- report lcovonly && cat. / coverage / lcov.info | coveralls",
+        "hola": "istanbul cover ./node_modules/mocha/bin/_mocha -- --recursive dist/test/ --report lcovonly -- -R spec"
     },
     "repository": {
         "type": "git",
@@ -29,6 +31,7 @@
         "coveralls": "^3.0.3",
         "istanbul": "^0.4.5",
         "mocha": "^6.0.2",
+        "nyc": "^13.3.0",
         "typescript": "^3.4.2"
     },
     "dependencies": {

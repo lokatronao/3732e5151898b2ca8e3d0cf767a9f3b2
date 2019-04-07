@@ -1,6 +1,7 @@
 let _chai = require('chai');
 let chaiHttp = require('chai-http');
 const expect = require('chai').expect;
+const app = require("../../routes/usuario");
 
 _chai.use(chaiHttp);
 const url= 'http://localhost:3000';
