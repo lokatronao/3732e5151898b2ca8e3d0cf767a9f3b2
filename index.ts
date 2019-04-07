@@ -15,7 +15,7 @@ mongoose.connect('mongodb://api:apiConnect8@ds123753.mlab.com:23753/curso',{
 }, (err) =>{
     if(err) throw err;
 
-    console.log("Base de datos ONLINE")
+    console.log("Base de datos ONLINE");
 });
 
 //Levantar express

@@ -1,7 +1,7 @@
 language: nodejs
 
-node_js:
-  - "stable"
+node_js: 
+ - "6"
 
 jdk:
   - oraclejdk8
@@ -9,8 +9,15 @@ jdk:
 addons:
   sonarcloud: true
 
-  
 script:
+  - nvm install 8
   - npm run setup
   - npm run build
-  - sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=lokatronao-github -Dsonar.projectKey=3732e5151898b2ca8e3d0cf767a9f3b2 -Dsonar.sources='./dist' -X
+  - node -v
+  - nohup node dist/index.js &
+  - npm run test
+  - npm run ny
+  - ls -l
+  #- sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=lokatronao-github -Dsonar.projectKey=3732e5151898b2ca8e3d0cf767a9f3b2 -Dsonar.sources='./dist' -X
+  - npm run coveralls
+  #- istanbul cover ./node_modules/mocha/bin/_mocha  --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
