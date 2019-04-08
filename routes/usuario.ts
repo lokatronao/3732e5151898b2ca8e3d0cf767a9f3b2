@@ -82,7 +82,8 @@ userRoutes.post('/create', (req:Request,res:Response) =>{
 
 userRoutes.post('/update', (req:Request,res:Response) =>{
     res.json({
-        ok: true
+        ok: true,
+        hola: true
     });
 });
 
