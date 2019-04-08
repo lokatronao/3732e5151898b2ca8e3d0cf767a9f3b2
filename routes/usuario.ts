@@ -80,6 +80,12 @@ userRoutes.post('/create', (req:Request,res:Response) =>{
     
 });
 
+userRoutes.post('/update', (req:Request,res:Response) =>{
+    res.json({
+        ok: true
+    });
+});
+
 userRoutes.get('/prueba', (req:Request,res:Response) =>{
     res.json({
         ok:true,
