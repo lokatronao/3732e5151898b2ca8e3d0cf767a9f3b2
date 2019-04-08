@@ -3,6 +3,7 @@ import Server from './classes/server';
 import userRoutes from './routes/usuario';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
 import postRoutes from './routes/post';
 
 const server = new Server();
@@ -11,12 +12,15 @@ const server = new Server();
 server.app.use(bodyParser.urlencoded({ extended:true}));
 server.app.use(bodyParser.json());
 
-//Rutas de la api
+// FileUpload
+server.app.use(fileUpload());
+
+// Rutas de la api
 server.app.use('/user', userRoutes);
 server.app.use('/posts', postRoutes);
 
 
-//Conectar BD
+// Conectar BD
 
 mongoose.connect('mongodb://api:apiConnect8@ds123753.mlab.com:23753/curso',{
     useNewUrlParser: true, useCreateIndex: true
@@ -26,7 +30,7 @@ mongoose.connect('mongodb://api:apiConnect8@ds123753.mlab.com:23753/curso',{
     console.log("Base de datos ONLINE");
 });
 
-//Levantar express
+// Levantar express
 server.start( () => {
     console.log(`Servidor corriendo en ${server.port}`);
 });
