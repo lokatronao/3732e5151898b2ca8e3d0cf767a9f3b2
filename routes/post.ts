@@ -79,7 +79,7 @@ postRoutes.post('/upload',[ verificaToken ],(req:any,res:Response)=>{
     }
 
     res.json({
-        ok: false,
+        ok: true,
         file: file.mimetype
     })
 })
