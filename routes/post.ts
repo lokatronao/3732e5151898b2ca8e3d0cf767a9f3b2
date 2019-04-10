@@ -83,6 +83,12 @@ postRoutes.post('/upload',[ verificaToken ], async (req:any,res:Response)=>{
     }
 
     await fileSystem.guardarImagenTemporal(file,req.usuario._id)
+    .then(()=>{
+        res.json({
+            ok: true,
+            file: file.mimetype
+        })
+    })
     .catch((err:any)=>{
         return res.json({
             ok: false,
@@ -90,10 +96,7 @@ postRoutes.post('/upload',[ verificaToken ], async (req:any,res:Response)=>{
         })
     });
 
-    res.json({
-        ok: true,
-        file: file.mimetype
-    })
+    
 });
 
 postRoutes.get('/imagen/:userid/:img',(req:any,res:Response)=>{
