@@ -91,7 +91,20 @@ userRoutes.post('/update', verificaToken, (req:any,res:Response) =>{
 
     Usuario.findByIdAndUpdate(req.usuario._id,user,{new:true},(err, userDB)=>{
 
-        if(err) throw err;
+        if(err){
+            const codigo:string = err['codeName'];
+            const errmsg:string = err['errmsg'];
+            if(codigo.includes("DuplicateKey") && errmsg.includes('email')){
+                if(!userDB){
+                    return res.json({
+                        ok:false,
+                        mensaje: 'Ya existe un usuario con ese correo'
+                    })
+                }
+            }else{
+                throw err;
+            }
+        }
 
         if(!userDB){
             return res.json({
