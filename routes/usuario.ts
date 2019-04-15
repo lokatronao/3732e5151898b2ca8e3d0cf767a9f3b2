@@ -72,10 +72,20 @@ userRoutes.post('/create', (req:Request,res:Response) =>{
         });
 
     }).catch(err =>{
-        res.json({
-            ok: false,
-            err
-        })
+        if(err){
+            const errmsg:string = err['errmsg'];
+            if(errmsg.includes('duplicate key')&&errmsg.includes('email')){
+                    return res.json({
+                        ok:false,
+                        mensaje: 'Ya existe un usuario con ese correo'
+                    })
+            }else{
+                res.json({
+                    ok: false,
+                    err
+                });
+            }
+        }
     })
 
     
@@ -91,7 +101,18 @@ userRoutes.post('/update', verificaToken, (req:any,res:Response) =>{
 
     Usuario.findByIdAndUpdate(req.usuario._id,user,{new:true},(err, userDB)=>{
 
-        if(err) throw err;
+        if(err){
+            const codigo:string = err['codeName'];
+            const errmsg:string = err['errmsg'];
+            if(codigo.includes("DuplicateKey") && errmsg.includes('email')){
+                    return res.json({
+                        ok:false,
+                        mensaje: 'Ya existe un usuario con ese correo'
+                    })
+            }else{
+                throw err;
+            }
+        }
 
         if(!userDB){
             return res.json({

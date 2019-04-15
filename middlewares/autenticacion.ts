@@ -11,7 +11,7 @@ export const verificaToken = (req:any,res:Response,next:NextFunction) =>{
         next();
     })
     .catch(err=>{
-        res.json({
+        res.status(401).json({
             ok: false,
             mensaje: 'Token no valido'
         });
