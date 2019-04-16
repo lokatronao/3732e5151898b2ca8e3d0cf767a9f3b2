@@ -54,6 +54,7 @@ userRoutes.post('/create', (req:Request,res:Response) =>{
     const user = {
         nombre: body.nombre,
         email: body.email,
+        nickname: body.nickname,
         password: bcrypt.hashSync(body.password,10),
         avatar: body.avatar,
     }
@@ -63,6 +64,7 @@ userRoutes.post('/create', (req:Request,res:Response) =>{
             _id: userDB._id,
             nombre: userDB.nombre,
             email: userDB.email,
+            nickname: userDB.nickname,
             avatar: userDB.avatar
         });
 
@@ -74,11 +76,18 @@ userRoutes.post('/create', (req:Request,res:Response) =>{
     }).catch(err =>{
         if(err){
             const errmsg:string = err['errmsg'];
-            if(errmsg.includes('duplicate key')&&errmsg.includes('email')){
+            if(errmsg.includes('duplicate key')){
+                if(errmsg.includes('email')){
                     return res.json({
                         ok:false,
                         mensaje: 'Ya existe un usuario con ese correo'
-                    })
+                    });
+                } else if(errmsg.includes('nickname')) {
+                    return res.json({
+                        ok:false,
+                        mensaje: 'Ya existe un usuario con nickname'
+                    });
+                }
             }else{
                 res.json({
                     ok: false,
@@ -96,7 +105,8 @@ userRoutes.post('/update', verificaToken, (req:any,res:Response) =>{
     const user = {
         nombre: req.body.nombre || req.usuario.nombre,
         email: req.body.email || req.usuario.email,
-        avatar: req.body.avatar || req.usuario.avatar
+        avatar: req.body.avatar || req.usuario.avatar,
+        nickname: req.body.nickname || req.usuario.nickname
     }
 
     Usuario.findByIdAndUpdate(req.usuario._id,user,{new:true},(err, userDB)=>{
@@ -104,11 +114,18 @@ userRoutes.post('/update', verificaToken, (req:any,res:Response) =>{
         if(err){
             const codigo:string = err['codeName'];
             const errmsg:string = err['errmsg'];
-            if(codigo.includes("DuplicateKey") && errmsg.includes('email')){
+            if(codigo.includes("DuplicateKey")){
+                if(errmsg.includes('email')){
                     return res.json({
                         ok:false,
                         mensaje: 'Ya existe un usuario con ese correo'
-                    })
+                    });
+                } else if(errmsg.includes('nickname')){
+                    return res.json({
+                        ok:false,
+                        mensaje: 'Ya existe un usuario con nickname'
+                    });
+                }
             }else{
                 throw err;
             }
