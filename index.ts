@@ -1,10 +1,11 @@
 
 import Server from './classes/server';
-import userRoutes from './routes/usuario';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import fileUpload from 'express-fileupload';
 import postRoutes from './routes/post';
+import userRoutes from './routes/usuario';
+import bucketRoutes from './routes/bucket';
 import cors from 'cors';
 
 const server = new Server();
@@ -25,6 +26,7 @@ server.app.use(cors({
 // Rutas de la api
 server.app.use('/user', userRoutes);
 server.app.use('/posts', postRoutes);
+server.app.use('/bucket', bucketRoutes);
 
 
 // Conectar BD

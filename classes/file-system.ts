@@ -9,8 +9,6 @@ export default class FileSystem {
 
     guardarImagenTemporal(file: FileUpload, userId: string) {
 
-
-
         return new Promise((resolve, reject) => {
             this.analisis(file)
                 .then(async() => {
@@ -43,7 +41,93 @@ export default class FileSystem {
                 });
 
         })
+    };
+
+    //Test bucket
+
+    guardarImagenBucket(file: FileUpload, bucketId: string, body: any) {
+        return new Promise((resolve, reject) => {
+            this.analisisBucket(file)
+            .then(async(detections) => {
+                //Creación de carpetas
+                const path = this.crearCarpetaBucket(bucketId);
+
+                //Cambiar nombre de archivo a nombre unico
+                const nombreArchivo = this.generarNombreUnico(file.name);
+                body.img = nombreArchivo;
+                body.detections = detections;
+                //Mover archivo de carpeta temporal a normal
+                const tinify = require("tinify");
+                tinify.key = "32C5et4342VLw7OWo53L8cvNKvprfppk";
+                const source = tinify.fromFile(file.tempFilePath);
+                file.mv(`${path}/${nombreArchivo}`, (err: any) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        source.toFile(`${path}/${nombreArchivo}`)
+                        .then(()=>{
+                            console.log("terminada la compresion");
+                        })
+                        .catch((err:any) => {
+                            console.log(err);
+                        });
+                        resolve(body);
+                    }
+                })
+            })
+            .catch((err) => {
+                reject(err);
+            });
+        });
+    };
+
+    private analisisBucket(file: FileUpload) {
+        return new Promise(async (resolve, reject) => {
+            const vision = require('@google-cloud/vision');
+
+            const client = new vision.ImageAnnotatorClient();
+
+            const [result] = await client.safeSearchDetection(file.tempFilePath);
+            const detections = result.safeSearchAnnotation;
+            const adult = detections.adult || "";
+            if (adult === "VERY_LIKELY") {
+                resolve(detections)
+            } else {
+                resolve(detections)
+            }
+        })
+    };
+
+    private crearCarpetaBucket(bucketId: string) {
+
+        const pathBucket = path.resolve(__dirname, '../uploads',`b-${bucketId}`);
+        console.log(pathBucket);
+
+        const existe = fs.existsSync(pathBucket);
+
+        if (!existe) {
+            fs.mkdirSync(pathBucket);
+        }
+
+        return pathBucket;
+
     }
+
+    getFotoUrlBucket(bucketId: string, img: string) {
+
+        // Path POSTs
+        const pathFoto = path.resolve(__dirname, '../uploads', `b-${bucketId}`, img);
+        // Si la imagen exist
+        const existe = fs.existsSync(pathFoto);
+        if (!existe) {
+            return path.resolve(__dirname, '../assets/400x250.jpg');
+        }
+
+        return pathFoto;
+
+    }
+
+    // FIN Test Bucket
 
     private analisis(file: FileUpload) {
         return new Promise(async (resolve, reject) => {
@@ -72,14 +156,12 @@ export default class FileSystem {
     }
 
     private generarNombreUnico(nombreOriginal: string) {
-
         const nombreArr = nombreOriginal.split('.');
         const extension = nombreArr[nombreArr.length - 1];
 
         const idUnico = uniqueid();
 
         return `${idUnico}.${extension}`;
-
     }
 
     private crearCarpetaUsuario(userId: string) {

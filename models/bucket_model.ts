@@ -16,7 +16,7 @@ bucketSchema.pre<IBucket>('save', function( next ){
     next();
 });
 
-interface IBucket extends Document{
+export interface IBucket extends Document{
     created: Date;
     imgs: String[];
 }
