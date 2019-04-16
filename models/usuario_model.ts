@@ -12,6 +12,11 @@ const usuarioSchema = new Schema({
         type: String,
         default: 'av-1.png'
     },
+    nickname:{
+        type: String,
+        unique: true,
+        required: [true, 'El nickname es necesario']
+    },
     email:{
         type: String,
         unique: true,
@@ -34,6 +39,7 @@ usuarioSchema.method('compararPassword',function(password:string = ''):boolean{
 interface IUsuario extends Document{
     nombre:string;
     email: string;
+    nickname: string;
     password: string;
     avatar: string;
 
