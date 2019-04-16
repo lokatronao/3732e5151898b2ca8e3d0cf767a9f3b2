@@ -59,8 +59,6 @@ postRoutes.post('/',[verificaToken],(req:any, res:Response)=>{
 
 postRoutes.post('/upload',[ verificaToken ], async (req:any,res:Response)=>{
 
-    console.log(req.files);
-
     if(!req.files){
         return res.status(400).json({
             ok: false,

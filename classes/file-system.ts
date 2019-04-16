@@ -13,23 +13,32 @@ export default class FileSystem {
 
         return new Promise((resolve, reject) => {
             this.analisis(file)
-                .then(() => {
+                .then(async() => {
                     //Creación de carpetas
                     const path = this.crearCarpetaUsuario(userId);
 
                     //Cambiar nombre de archivo a nombre unico
                     const nombreArchivo = this.generarNombreUnico(file.name);
-
                     //Mover archivo de carpeta temporal a normal
+                    const tinify = require("tinify");
+                    tinify.key = "32C5et4342VLw7OWo53L8cvNKvprfppk";
+                    const source = tinify.fromFile(file.tempFilePath);
                     file.mv(`${path}/${nombreArchivo}`, (err: any) => {
                         if (err) {
                             reject(err);
                         } else {
+                            source.toFile(`${path}/${nombreArchivo}`)
+                            .then(()=>{
+                                console.log("terminada la compresion");
+                            })
+                            .catch((err:any) => {
+                                console.log(err);
+                            });
                             resolve();
                         }
                     })
                 })
-                .catch((err)=>{
+                .catch((err) => {
                     reject(err);
                 });
 
@@ -37,14 +46,16 @@ export default class FileSystem {
     }
 
     private analisis(file: FileUpload) {
-        return new Promise(async(resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const vision = require('@google-cloud/vision');
 
             const client = new vision.ImageAnnotatorClient();
 
             const [result] = await client.safeSearchDetection(file.tempFilePath);
             const detections = result.safeSearchAnnotation;
-            if (detections.adult === null || detections.adult === "VERY_LIKELY") {
+            const adult = detections.adult || "";
+            if (adult === "VERY_LIKELY") {
+                console.log("Imagen inapropiada");
                 reject("No se pueden subir imagenes sexuales a la plataforma")
             } else {
                 resolve()
