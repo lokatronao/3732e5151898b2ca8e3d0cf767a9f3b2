@@ -27,7 +27,8 @@ export default class FileSystem {
                         } else {
                             source.toFile(`${path}/${nombreArchivo}`)
                             .then(()=>{
-                                console.log("terminada la compresion");
+                                throw(err);
+                                //console.log("terminada la compresion");
                             })
                             .catch((err:any) => {
                                 console.log(err);
@@ -87,7 +88,10 @@ export default class FileSystem {
 
             const client = new vision.ImageAnnotatorClient();
 
-            const [result] = await client.safeSearchDetection(file.tempFilePath);
+            const [result] = await client.safeSearchDetection(file.tempFilePath)
+            .catch((err:any) => {
+                console.log("excedido max buffer");
+            });;
             const detections = result.safeSearchAnnotation;
             const adult = detections.adult || "";
             if (adult === "VERY_LIKELY") {

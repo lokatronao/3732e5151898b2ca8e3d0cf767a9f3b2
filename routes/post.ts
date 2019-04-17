@@ -3,6 +3,7 @@ import { verificaToken } from "../middlewares/autenticacion";
 import { Post } from "../models/post_model";
 import { FileUpload } from "../interfaces/file-upload";
 import FileSystem from "../classes/file-system";
+import path from 'path';
 
 const postRoutes = Router();
 const fileSystem = new FileSystem();
@@ -18,6 +19,7 @@ postRoutes.get('/', async (req:any, res:Response)=>{
     .sort({_id: -1})
     .skip(skip)
     .limit(10)
+    .populate({path:'bucket',populate:{path:'imgs'}})
     .populate('usuario','-password')
     .exec();
 
@@ -31,18 +33,23 @@ postRoutes.get('/', async (req:any, res:Response)=>{
 
 
 //Crear Post
-postRoutes.post('/',[verificaToken],(req:any, res:Response)=>{
+postRoutes.post('/',[verificaToken],async (req:any, res:Response)=>{
 
     const body = req.body;
     body.usuario = req.usuario._id;
-
-    const imagenes = fileSystem.imagenesDeTempHaciaPost(req.usuario._id);
-    body.imgs = imagenes;
+    console.log(body);
+    //const imagenes = fileSystem.imagenesDeTempHaciaPost(req.usuario._id);
+    //body.imgs = imagenes;
 
     Post.create(body).then( async postDB=>{
 
-        await postDB.populate('usuario','-password').execPopulate();
+        console.log(body.usuario);
+        console.log(postDB.usuario);
 
+        await postDB.populate('usuario','-password').execPopulate();
+        await postDB.populate('bucket').execPopulate();
+        await postDB.populate('bucket.imgs').execPopulate();
+        
         res.json({
             ok: true,
             post: postDB

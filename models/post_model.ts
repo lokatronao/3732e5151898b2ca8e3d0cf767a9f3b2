@@ -9,9 +9,11 @@ const postSchema = new Schema({
     mensaje: {
         type: String
     },
-    imgs:[{
-        type: String
-    }],
+    bucket:{
+        type: Schema.Types.ObjectId,
+        ref: 'Bucket',
+        required: [ true, 'Debe existir una referencia a un bucket' ]
+    },
     coords:{
         type: String
     },

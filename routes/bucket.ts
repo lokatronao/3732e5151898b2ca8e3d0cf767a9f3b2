@@ -83,8 +83,11 @@ bucketRoutes.post('/image/add',[verificaToken],(req:any, res:Response)=>{
             })
         });
 
+        var img:any;
+
         await Image.create(body).then(imageDB=>{
             bucketDB.imgs.push(imageDB.id);
+            img = imageDB;
         });
 
         //const bodyBucket = bucketDB;
@@ -95,7 +98,7 @@ bucketRoutes.post('/image/add',[verificaToken],(req:any, res:Response)=>{
             if(bucketDB){
                 return res.json({
                     ok:true,
-                    bucketDB
+                    img
                 });
             }
         })
