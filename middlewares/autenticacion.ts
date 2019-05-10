@@ -1,4 +1,5 @@
 import {Request,Response,NextFunction} from 'express';
+import { Usuario } from "../models/usuario_model";
 import Token from '../classes/token';
 
 export const verificaToken = (req:any,res:Response,next:NextFunction) =>{
@@ -7,8 +8,20 @@ export const verificaToken = (req:any,res:Response,next:NextFunction) =>{
 
     Token.comprobarToken(userToken)
     .then((decoded:any)=>{
-        req.usuario = decoded.usuario;
-        next();
+        Usuario.findOne({_id: decoded.usuario._id},(err:any,userDB:any)=>{
+
+            if(err) throw err;
+
+            if(!userDB){
+                return res.json({
+                    ok:false,
+                    mensaje: 'El usuario al que pertenece este token ya no existe'
+                });
+            }
+
+            req.usuario = userDB;
+            next();
+        });
     })
     .catch(err=>{
         res.status(401).json({

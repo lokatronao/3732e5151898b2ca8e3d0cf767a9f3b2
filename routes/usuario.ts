@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { Usuario } from "../models/usuario_model";
+import { Usuario } from '../models/usuario_model';
 import bcrypt from 'bcrypt';
 import Token from "../classes/token";
 import { verificaToken } from "../middlewares/autenticacion";
@@ -42,19 +42,48 @@ userRoutes.post('/login',(req:Request,res:Response)=>{
             });
         }
     });
-
 });
 
+// Get config usuario
+userRoutes.get('/config',[verificaToken],(req:any,res:Response)=>{
+    const usuario = req.usuario;
+
+    Usuario.findOne({email: usuario.email},(err,userDB)=>{
+
+        if(!userDB){
+            return res.json({
+                ok:false,
+                mensaje: 'Usuario/contraseña no son correctos'
+            });
+        }
+
+        return res.json({
+            ok:true,
+            config: userDB.config
+        });
+
+    });
+
+    console.log(usuario);
+
+    
+});
 
 // Crear un usuario
 userRoutes.post('/create', (req:Request,res:Response) =>{
 
     const body = req.body;
 
+    console.log(body);
+
     const user = {
         nombre: body.nombre,
         email: body.email,
         nickname: body.nickname,
+        config:{
+            pais: body.config.pais,
+            idioma: body.config.idioma
+        },
         password: bcrypt.hashSync(body.password,10),
         avatar: body.avatar,
     }
@@ -96,8 +125,6 @@ userRoutes.post('/create', (req:Request,res:Response) =>{
             }
         }
     })
-
-    
 });
 
 userRoutes.post('/update', verificaToken, (req:any,res:Response) =>{
@@ -108,6 +135,8 @@ userRoutes.post('/update', verificaToken, (req:any,res:Response) =>{
         avatar: req.body.avatar || req.usuario.avatar,
         nickname: req.body.nickname || req.usuario.nickname
     }
+
+    console.log(req.usuario);
 
     Usuario.findByIdAndUpdate(req.usuario._id,user,{new:true},(err, userDB)=>{
 

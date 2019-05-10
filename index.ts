@@ -6,6 +6,7 @@ import fileUpload from 'express-fileupload';
 import postRoutes from './routes/post';
 import userRoutes from './routes/usuario';
 import bucketRoutes from './routes/bucket';
+import translateRoutes from './routes/traduccion';
 import cors from 'cors';
 
 const server = new Server();
@@ -27,6 +28,7 @@ server.app.use(cors({
 server.app.use('/user', userRoutes);
 server.app.use('/posts', postRoutes);
 server.app.use('/bucket', bucketRoutes);
+server.app.use('/translate', translateRoutes);
 
 
 // Conectar BD

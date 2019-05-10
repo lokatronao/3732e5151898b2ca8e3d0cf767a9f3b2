@@ -25,6 +25,16 @@ const usuarioSchema = new Schema({
     password:{
         type: String,
         required: [true, 'La contraseña es necesaria']
+    },
+    config:{
+        pais:{
+            type: String,
+            default: 'Spain'
+        },
+        idioma:{
+            type: String,
+            default: 'ES'
+        }
     }
 });
 
@@ -42,6 +52,10 @@ interface IUsuario extends Document{
     nickname: string;
     password: string;
     avatar: string;
+    config:{
+        pais: string;
+        idioma: string;
+    };
 
     compararPassword(password: string):boolean;
 }
