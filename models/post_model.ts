@@ -7,7 +7,13 @@ const postSchema = new Schema({
         type: Date
     },
     mensaje: {
-        type: String
+        texto: {
+            type: String,
+            required: [true, 'Debe existir el texto del mensaje']
+        },
+        idioma: {
+            type: String
+        }   
     },
     bucket:{
         type: Schema.Types.ObjectId,
@@ -31,7 +37,10 @@ postSchema.pre<IPost>('save', function( next ){
 
 interface IPost extends Document{
     created: Date;
-    mensaje: String;
+    mensaje: {
+        texto: String;
+        idioma: String;
+    }
     imgs: String[];
     coords: String;
     usuario: String;

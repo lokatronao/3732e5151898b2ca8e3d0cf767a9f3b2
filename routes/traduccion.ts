@@ -6,6 +6,9 @@ import { verificaToken } from "../middlewares/autenticacion";
 
 const translateRoutes = Router();
 
+//* ============================
+//* Comprobar idioma de un texto
+//* ============================
 translateRoutes.post('/', verificaToken, (req:any,res:Response) =>{
 
     const body = req.body;
@@ -17,28 +20,24 @@ translateRoutes.post('/', verificaToken, (req:any,res:Response) =>{
         });
     }
 
-    const {Translate} = require('@google-cloud/translate');
-
-    const projectId = 'picturegram-3a1fe'
-
-    const translate = new Translate({projectId});
-
-    translate.detect(body.text,(err:any,results:any)=>{
-        if(err){
-            res.json({
-                ok: false,
-                err
-            });
-        }else{
-            res.json({
-                ok: true,
-                results
-            });
-        }
+    detectarIdioma(body.text)
+    .then((resp)=>{
+        res.json({
+            ok: true,
+            resp
+        });
+    })
+    .catch((err)=>{
+        res.json({
+            ok: false,
+            err
+        });
     });
-
 });
 
+//* ============================
+//* Traducir un texto
+//* ============================
 translateRoutes.post('/translate', verificaToken, (req:any,res:Response) =>{
 
     const body = req.body;
@@ -68,12 +67,13 @@ translateRoutes.post('/translate', verificaToken, (req:any,res:Response) =>{
         //const results = JSON.parse(result);
 
         const translation = result[0];
-
+        console.log(translation);
         res.json({
             ok: true,
             translation
         });
     }).catch((err:any) => {
+        console.log(err);
         res.json({
             ok: false,
             err
@@ -82,5 +82,25 @@ translateRoutes.post('/translate', verificaToken, (req:any,res:Response) =>{
 
 });
 
+//* ===================================================
+//* Funcion encargada de detectar idioma de un texto
+//* ===================================================
+export function detectarIdioma(text:String){
+    const {Translate} = require('@google-cloud/translate');
+
+    const projectId = 'picturegram-3a1fe'
+
+    const translate = new Translate({projectId});
+
+    return new Promise((resolve,reject)=>{
+        translate.detect(text,(err:any,results:any)=>{
+            if(err){
+                reject(err);
+            }else{
+                resolve(results);
+            }
+        })
+    })
+}
 
 export default translateRoutes;

@@ -1,0 +1,18 @@
+@startuml
+
+partition Initialization {
+    if (condition A) then (yes)
+        :read config file;
+        :init internal variable;
+    EndIf
+}
+partition Running {
+	:wait for user interaction;
+	read config file-print information;
+}
+
+partition Initialization {
+    :hola;
+}
+
+@enduml

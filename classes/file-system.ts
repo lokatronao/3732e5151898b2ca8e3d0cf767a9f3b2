@@ -214,11 +214,18 @@ export default class FileSystem {
 
     getFotoUrl(userId: string, img: string) {
 
-        // Path POSTs
-        const pathFoto = path.resolve(__dirname, '../uploads', userId, 'posts', img);
-        // Si la imagen exist
-        const existe = fs.existsSync(pathFoto);
-        if (!existe) {
+        var pathFoto;
+
+        try{
+            // Path POSTs
+            pathFoto = path.resolve(__dirname, '../uploads', userId, 'posts', img);
+            // Si la imagen exist
+            const existe = fs.existsSync(pathFoto);
+            if (!existe) {
+                return path.resolve(__dirname, '../assets/400x250.jpg');
+            }
+        }catch(err){
+            console.log(err);
             return path.resolve(__dirname, '../assets/400x250.jpg');
         }
 

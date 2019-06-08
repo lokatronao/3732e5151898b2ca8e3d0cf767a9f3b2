@@ -8,7 +8,9 @@ import FileSystem from "../classes/file-system";
 const bucketRoutes = Router();
 const fileSystem = new FileSystem();
 
-//Crear Bucket
+//* ============================
+//* Creación de bucket
+//* ============================
 bucketRoutes.post('/',[verificaToken],(req:any, res:Response)=>{
 
     const body = req.body;
@@ -27,7 +29,9 @@ bucketRoutes.post('/',[verificaToken],(req:any, res:Response)=>{
     })
 });
 
-//Añadir imagenes al Bucket
+//* ============================
+//* Añadir imagenes a un bucket
+//* ============================
 bucketRoutes.post('/image/add',[verificaToken],(req:any, res:Response)=>{
 
     console.log(req.body.bucket);
@@ -106,6 +110,9 @@ bucketRoutes.post('/image/add',[verificaToken],(req:any, res:Response)=>{
 
 });
 
+//* ==================================
+//* Obtención de imagenes de un bucket
+//* ==================================
 bucketRoutes.get('/image/:bucketid/:img',(req:any,res:Response)=>{
 
     const bucketId = req.params.bucketid;

@@ -1,14 +1,16 @@
 import { Router, Response } from "express";
-import { verificaToken } from "../middlewares/autenticacion";
-import { Post } from "../models/post_model";
+import { verificaToken, deprecated } from '../middlewares/autenticacion';
+import { Post} from '../models/post_model';
+import { detectarIdioma } from '../routes/traduccion'
 import { FileUpload } from "../interfaces/file-upload";
 import FileSystem from "../classes/file-system";
-import path from 'path';
 
 const postRoutes = Router();
 const fileSystem = new FileSystem();
 
-//Obtener Post Paginados
+//* ============================
+//* Obtener post paginados
+//* ============================
 postRoutes.get('/', async (req:any, res:Response)=>{
 
     let pagina = Number(req.query.pagina) || 1;
@@ -32,14 +34,35 @@ postRoutes.get('/', async (req:any, res:Response)=>{
 });
 
 
-//Crear Post
+//* ============================
+//* Crear post
+//* ============================
 postRoutes.post('/',[verificaToken],async (req:any, res:Response)=>{
 
-    const body = req.body;
+    var body = req.body;
+
+    const mensaje = {
+        texto:  body.mensaje,
+        idioma: "",
+    }
+
+    await  detectarIdioma(body.mensaje)
+    .then((resp:any)=>{
+        mensaje.idioma = resp.language;
+    }).catch((err)=>{
+        return res.json({
+            ok: false,
+            err
+        })
+    })
+
+    
     body.usuario = req.usuario._id;
+    body.mensaje = mensaje
+
+
+
     console.log(body);
-    //const imagenes = fileSystem.imagenesDeTempHaciaPost(req.usuario._id);
-    //body.imgs = imagenes;
 
     Post.create(body).then( async postDB=>{
 
@@ -62,9 +85,11 @@ postRoutes.post('/',[verificaToken],async (req:any, res:Response)=>{
     })
 });
 
-// Servicio para subir archivos
-
-postRoutes.post('/upload',[ verificaToken ], async (req:any,res:Response)=>{
+//* ============================
+//* Subir imagenes
+//* ============================
+//!  Este metodo o funcion está deprecado
+postRoutes.post('/upload',[deprecated, verificaToken ], async (req:any,res:Response)=>{
 
     if(!req.files){
         return res.status(400).json({
@@ -106,7 +131,11 @@ postRoutes.post('/upload',[ verificaToken ], async (req:any,res:Response)=>{
     
 });
 
-postRoutes.get('/imagen/:userid/:img',(req:any,res:Response)=>{
+//* ============================
+//* Obtener imagenes
+//* ============================
+//!  Este metodo o funcion está deprecado
+postRoutes.get('/imagen/:userid/:img',[deprecated],(req:any,res:Response)=>{
 
     const userId = req.params.userid;
     const img = req.params.img;

@@ -6,7 +6,9 @@ import { verificaToken } from "../middlewares/autenticacion";
 
 const userRoutes = Router();
 
-//Login
+//* ============================
+//* Login
+//* ============================
 userRoutes.post('/login',(req:Request,res:Response)=>{
     
     const body = req.body;
@@ -44,7 +46,9 @@ userRoutes.post('/login',(req:Request,res:Response)=>{
     });
 });
 
-// Get config usuario
+//* ====================================
+//* Sacar la configuración de un usuario
+//* ====================================
 userRoutes.get('/config',[verificaToken],(req:any,res:Response)=>{
     const usuario = req.usuario;
 
@@ -69,7 +73,9 @@ userRoutes.get('/config',[verificaToken],(req:any,res:Response)=>{
     
 });
 
-// Crear un usuario
+//* ============================
+//* Creación de un usuario
+//* ============================
 userRoutes.post('/create', (req:Request,res:Response) =>{
 
     const body = req.body;
@@ -127,6 +133,9 @@ userRoutes.post('/create', (req:Request,res:Response) =>{
     })
 });
 
+//* ============================
+//* Actualización de usuario
+//* ============================
 userRoutes.post('/update', verificaToken, (req:any,res:Response) =>{
     
     const user = {
@@ -182,6 +191,9 @@ userRoutes.post('/update', verificaToken, (req:any,res:Response) =>{
     });
 });
 
+//* ============================
+//* Obtención de usuario
+//* ============================
 userRoutes.get('/',[verificaToken],(req:any,res:Response)=>{
     const usuario = req.usuario;
 
@@ -191,6 +203,10 @@ userRoutes.get('/',[verificaToken],(req:any,res:Response)=>{
     });
 });
 
+//* ============================
+//* Ruta de prueba
+//* ============================
+//!  Este metodo o funcion está deprecado
 userRoutes.get('/prueba', (req:Request,res:Response) =>{
     res.json({
         ok:true,
