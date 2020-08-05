@@ -69,7 +69,7 @@
         "compress-images": "^1.5.1",
         "cors": "^2.8.5",
         "express": "^4.16.4",
-        "express-fileupload": "^1.1.4",
+        "express-fileupload": "^1.1.9",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.4.22",
         "tinify": "^1.6.0-beta.2",
