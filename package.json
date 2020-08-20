@@ -64,7 +64,7 @@
     },
     "dependencies": {
         "@google-cloud/vision": "^0.25.0",
-        "bcrypt": "^3.0.5",
+        "bcrypt": "^5.0.0",
         "body-parser": "^1.18.3",
         "compress-images": "^1.5.1",
         "cors": "^2.8.5",
